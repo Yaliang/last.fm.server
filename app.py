@@ -23,16 +23,16 @@ def load(sFilename):
     return dObj
 
 # initialization
-# load data
-pathToData = os.path.join(app.root_path, 'static','data','hetrec2011-lastfm-2k-built')
-UserManager = load(os.path.join(pathToData,'user-manager.pkr'))
-ArtistManager = load(os.path.join(pathToData, 'artist-manager.pkr'))
-TrainUserManager = load(os.path.join(pathToData, 'train-user-manager.pkr'))
 # build app
 app = Flask(__name__)
 app.config.update(
     DEBUG = True,
 )
+# load data
+pathToData = os.path.join(app.root_path, 'static','data','hetrec2011-lastfm-2k-built')
+UserManager = load(os.path.join(pathToData,'user-manager.pkr'))
+ArtistManager = load(os.path.join(pathToData, 'artist-manager.pkr'))
+TrainUserManager = load(os.path.join(pathToData, 'train-user-manager.pkr'))
 
 #controllers
 @app.route("/")
