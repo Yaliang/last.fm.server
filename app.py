@@ -56,7 +56,7 @@ def testUser(testUserID):
     # testUserSet, testUserIDList = splitTrainSetWithoutRemoving(TrainUserManager, 0, [testUserID])
     knn = KNN(2)
     knn.training(TrainUserManager, ArtistManager)
-    favOfOne = knn.testing(testUserSet[testUserID], UserManager, ArtistManager, True)
+    favOfOne = knn.testing(TrainUserManager[testUserID], UserManager, ArtistManager, True)
     realfavOfOne = UserManager[testUserID].getMostFav().keys()[0]
     ret = "The most listen artist:\n"+str(ArtistManager[realfavOfOne])+"\n"
     ret += "The artist we predict:\n"+str(ArtistManager[favOfOne])
