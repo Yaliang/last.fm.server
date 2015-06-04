@@ -11,7 +11,7 @@ app.config.update(
 @app.route("/")
 def index():
     pathToData = os.path.join(app.root_path, 'static','data')
-    f = open(os.path.join(pathToData, 'testdata.data')
+    f = open(os.path.join(pathToData, 'testdata.data'),'r')
     data = f.readline()
     f.close()
     return data
