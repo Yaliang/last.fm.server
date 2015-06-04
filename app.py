@@ -53,15 +53,16 @@ def index():
 def testUser(testUserID):
     if not UserManager.has_key(testUserID):
         return "don't has user with userID = "+str(testUserID)
-    testUserSet, testUserIDList = splitTrainSetWithoutRemoving(TrainUserManager, 0, [testUserID])
+    # testUserSet, testUserIDList = splitTrainSetWithoutRemoving(TrainUserManager, 0, [testUserID])
     knn = KNN(2)
     knn.training(TrainUserManager, ArtistManager)
     favOfOne = knn.testing(testUserSet[testUserID], UserManager, ArtistManager, True)
     realfavOfOne = UserManager[testUserID].getMostFav().keys()[0]
-    ret = "The most listen artist:</br>"+str(ArtistManager[realfavOfOne])
-    ret += "The artist we predict:</br>"+str(ArtistManager[favOfOne])
+    ret = "The most listen artist:\n"+str(ArtistManager[realfavOfOne])+"\n"
+    ret += "The artist we predict:\n"+str(ArtistManager[favOfOne])
+    ret.replace("\n","</br>")
     # recovery modified TrainUserManager
-    TrainUserManager[testUserID]=testUserSet[testUserID]
+    # TrainUserManager[testUserID]=testUserSet[testUserID]
 
     return ret
 
