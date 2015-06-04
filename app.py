@@ -9,8 +9,12 @@ app.config.update(
 
 #controllers
 @app.route("/")
-def hello():
-    return "Hello"
+def index():
+    pathToData = os.path.join(app.root_path, 'static','data')
+    f = open(os.path.join(pathToData, 'testdata.data')
+    data = f.readline()
+    f.close()
+    return data
 
 # launch
 if __name__ == "__main__":
