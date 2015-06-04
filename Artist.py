@@ -14,6 +14,7 @@ class Artist:
 	def __repr__(self):
 		ret = "Artiest: " + str(self.ID) + "\t"
 		ret = ret + self.Name + "\n"
+		ret = ret + "Tags:\n"
 		ret = ret + str(self.Tag) + "\n"
 
 		return ret
@@ -22,6 +23,7 @@ class Artist:
 		"""convert the object to string"""
 		ret = "Artiest: " + str(self.ID) + "\t"
 		ret = ret + self.Name + "\n"
+		ret = ret + "Tags:\n"
 		ret = ret + str(self.Tag) + "\n"
 
 		return ret
