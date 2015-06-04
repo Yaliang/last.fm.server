@@ -7,7 +7,6 @@ from KNN import *
 
 def save(dObj, sFilename):
     """Given an object and a file name, write the object to the file using pickle."""
-
     f = open(sFilename, "w")
     p = pickle.Pickler(f)
     p.dump(dObj)
@@ -15,12 +14,24 @@ def save(dObj, sFilename):
 
 def load(sFilename):
     """Given a file name, load and return the object stored in the file."""
-
     f = open(sFilename, "r")
     u = pickle.Unpickler(f)
     dObj = u.load()
     f.close()
     return dObj
+
+def splitTrainSetWithoutRemoving(userManager, percentage, userList = []):
+    """split the train set by percentage, to """
+    if len(userList) == 0:
+        testUserIDList = random.sample(userManager, int(len(userManager)*percentage))
+    else:
+        testUserIDList = userList
+    testUserSet = {}
+    for userID in testUserIDList:
+        testUser = userManager.pop(userID)
+        testUserSet[userID] = testUser
+
+    return testUserSet, testUserIDList
 
 # initialization
 # build app
@@ -35,9 +46,25 @@ ArtistManager = load(os.path.join(pathToData, 'artist-manager.pkr'))
 TrainUserManager = load(os.path.join(pathToData, 'train-user-manager.pkr'))
 
 #controllers
-@app.route("/")
+@app.route('/')
 def index():
     return 'user number:'+str(len(UserManager))+'; artist number:'+str(len(ArtistManager))
+@app.route('/testUserWithID/<int:testUserID>')
+def testUser(testUserID):
+    if not UserManager.has_key(testUserID):
+        return "don't has user with userID = "+str(testUserID)
+    testUserSet, testUserIDList = splitTrainSetWithoutRemoving(TrainUserManager, 0, [testUserID])
+    knn = KNN(2)
+    knn.training(TrainUserManager, ArtistManager)
+    favOfOne = knn.testing(testUserSet[testUserID], UserManager, ArtistManager, True)
+    realfavOfOne = UserManager[testUserID].getMostFav().keys()[0]
+    ret = "The most listen artist:\n"+str(ArtistManager[realfavOfOne])
+    ret = "The artist we predict:\n"+str(ArtistManager[favOfOne])
+    # recovery modified TrainUserManager
+    TrainUserManager[testUserID]=testUserSet[testUserID]
+
+    return ret
+
 
 # launch
 if __name__ == "__main__":
