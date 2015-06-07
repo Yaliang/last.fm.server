@@ -2,6 +2,7 @@ import os
 import json
 from flask import Flask
 from flask.ext.cors import CORS
+
 import pickle
 from Artist import *
 from User import *
