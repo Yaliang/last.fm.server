@@ -98,7 +98,7 @@ def buildMorkUser():
     testUser = User(-100)
     missingArtist = 0
     for artistRecord in artistlist:
-        artistID = artistRecord.keys()[0]
+        artistID = int(artistRecord.keys()[0])
         artistWeight = artistRecord.values()[0]
         if ArtistManager.has_key(artistID):
             testUser.insertArt(artistID, artistWeight)
