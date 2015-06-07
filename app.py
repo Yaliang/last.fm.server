@@ -109,7 +109,7 @@ def buildMockUser():
     favOfOne = knn.testing(testUser, UserManager, ArtistManager, True)
     ret = {'artistID': favOfOne}
     if missingArtist > 0:
-        ret['error'] = {'missingArtist':missingArtist}
+        ret['warning'] = {'missingArtist':missingArtist}
     # dataObj = {'artists-num':len(artistlist)}
     return json.dumps(ret)
 
