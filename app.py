@@ -1,6 +1,6 @@
 import os
 import json
-from flask import Flask
+from flask import Flask, request
 from flask.ext.cors import CORS
 
 import pickle
