@@ -93,8 +93,8 @@ def getArtistName(artistID):
 
 @app.route('/morkUserWithArtist/',methods=['POST'])
 def buildMorkUser():
-    dataObj = json.loads(request.data)
-    return json.dumps(dataObj)
+    # dataObj = json.loads(request.data)
+    return json.dumps(request)
 
 
 # launch
