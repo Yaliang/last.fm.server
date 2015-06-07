@@ -88,7 +88,7 @@ class KNN:
 			distance = node.values()[0]
 			# G is a gaussian function: G(x) = a exp (- x^2 / (2 * c^2))
 			# use a = 1, c^2 = 0.2 
-			GDistance = 1.0* math.exp(-distance**2 / 0.4)
+			GDistance = 1.0* math.exp(-distance**2 / 0.004)
 			# get artist list of user with userId
 			user = userManager[userID]
 			artistList = user.ArtistList

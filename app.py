@@ -104,7 +104,7 @@ def buildMockUser():
             testUser.insertArt(artistID, artistWeight)
         else:
             missingArtist.append(artistID)
-    knn = KNN(35)
+    knn = KNN(45)
     knn.training(UserManager, ArtistManager)
     favOfOne = knn.testing(testUser, UserManager, ArtistManager, True)
     ret = {'artistID': favOfOne}
