@@ -91,8 +91,8 @@ def getArtistName(artistID):
     ret = json.dumps(ret)
     return ret
 
-@app.route('/morkUserWithArtist/',methods=['POST'])
-def buildMorkUser():
+@app.route('/mockUserWithArtist/',methods=['POST'])
+def buildMockUser():
     artists = request.form['artists']
     artistlist = json.loads(artists)
     testUser = User(-100)
