@@ -1,6 +1,7 @@
 import os
 import json
 from flask import Flask
+from flask.ext.cors import CORS
 import pickle
 from Artist import *
 from User import *
@@ -37,6 +38,7 @@ def splitTrainSetWithoutRemoving(userManager, percentage, userList = []):
 # initialization
 # build app
 app = Flask(__name__)
+cors = CORS(app)
 app.config.update(
     DEBUG = True,
 )
@@ -67,7 +69,7 @@ def testUser(testUserID):
     TrainUserManager[testUserID]=testUserSet[testUserID]
 
     return ret
-    
+
 @app.route('/getArtist/<int:artistID>')
 def getArtistName(artistID):
     maxArtistID = max(ArtistManager.keys())
