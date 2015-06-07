@@ -95,8 +95,23 @@ def getArtistName(artistID):
 def buildMorkUser():
     artists = request.form['artists']
     artistlist = json.loads(artists)
-    dataObj = {'artists-num':len(artistlist)}
-    return json.dumps(dataObj)
+    testUser = User(-100)
+    missingArtist = 0
+    for artistRecord in artistlist:
+        artistID = artistRecord.keys()[0]
+        artistWeight = artistRecord.values()[0]
+        if ArtistManager.has_key(artistID):
+            testUser.insertArt(artistID, artistWeight)
+        else:
+            missingArtist += 1
+    knn = KNN(35)
+    knn.training(UserManager, ArtistManager)
+    favOfOne = knn.testing(testUser, UserManager, ArtistManager, True)
+    ret = {'artistID': favOfOne}
+    if missingArtist > 0:
+        ret['error'] = {'missingArtist':missingArtist}
+    # dataObj = {'artists-num':len(artistlist)}
+    return json.dumps(ret)
 
 
 # launch
