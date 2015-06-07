@@ -1,4 +1,5 @@
 import os
+import json
 from flask import Flask
 import pickle
 from Artist import *
@@ -49,6 +50,7 @@ TrainUserManager = load(os.path.join(pathToData, 'train-user-manager.pkr'))
 @app.route('/')
 def index():
     return 'user number:'+str(len(UserManager))+'; artist number:'+str(len(ArtistManager))
+
 @app.route('/testUserWithID/<int:testUserID>')
 def testUser(testUserID):
     if not UserManager.has_key(testUserID):
@@ -64,6 +66,26 @@ def testUser(testUserID):
     # recovery modified TrainUserManager
     TrainUserManager[testUserID]=testUserSet[testUserID]
 
+    return ret
+    
+@app.route('/getArtist/<int:artistID>')
+def getArtistName(artistID):
+    maxArtistID = max(ArtistManager.keys())
+    minArtistID = min(ArtistManager.keys())
+    ret={}
+    if artistID > maxArtistID or artistID < minArtistID:
+        ret['error'] = 101
+        ret = json.dumps(ret)
+        return ret
+    if not ArtistManager.has_key(artistID):
+        ret['error'] = 102
+        ret = json.dumps(ret)
+        return ret
+    
+    ret['error'] = 0
+    ret['id'] = artistID
+    ret['name'] = ArtistManager[artistID].Name
+    ret = json.dumps(ret)
     return ret
 
 
