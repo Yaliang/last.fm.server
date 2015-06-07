@@ -96,14 +96,14 @@ def buildMorkUser():
     artists = request.form['artists']
     artistlist = json.loads(artists)
     testUser = User(-100)
-    missingArtist = 0
+    missingArtist = []
     for artistRecord in artistlist:
         artistID = int(artistRecord.keys()[0])
         artistWeight = artistRecord.values()[0]
         if ArtistManager.has_key(artistID):
             testUser.insertArt(artistID, artistWeight)
         else:
-            missingArtist += 1
+            missingArtist.append(artistID)
     knn = KNN(35)
     knn.training(UserManager, ArtistManager)
     favOfOne = knn.testing(testUser, UserManager, ArtistManager, True)
