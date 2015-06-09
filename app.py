@@ -100,11 +100,12 @@ def buildMockUser():
     for artistRecord in artistlist:
         artistID = int(artistRecord.keys()[0])
         artistWeight = artistRecord.values()[0]
-        if artistWeight > 0:
-            if ArtistManager.has_key(artistID):
-                testUser.insertArt(artistID, artistWeight)
-            else:
-                missingArtist.append(artistID)
+        if artistWeight == 0:
+            artistWeight = 0.0000001
+        if ArtistManager.has_key(artistID):
+            testUser.insertArt(artistID, artistWeight)
+        else:
+            missingArtist.append(artistID)
     knn = KNN(40)
     knn.training(UserManager, ArtistManager)
     favOfOne = knn.testing(testUser, UserManager, ArtistManager, True)
