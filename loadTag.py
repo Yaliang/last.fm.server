@@ -25,7 +25,7 @@ while line:
     line = f.readline()
     linedata = line.replace('\n','').split('\t')
     if len(linedata) > 1:
-        tagID = linedata[0]
+        tagID = int(linedata[0])
         tagWord = linedata[1]
         TagManager[tagID] = tagWord
 
