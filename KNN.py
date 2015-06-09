@@ -110,7 +110,9 @@ class KNN:
 		sortedMatch = sorted(match.items(), key=operator.itemgetter(1))
 		bestMatchArtistID = sortedMatch[-1][0]
 
-		return bestMatchArtistID
+		sortedTag = sorted(curfeature.items(), key=operator.itemgetter(1))
+
+		return bestMatchArtistID, sortedMatch, sortedTag
 
 
 			

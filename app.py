@@ -48,6 +48,7 @@ pathToData = os.path.join(app.root_path, 'static','data','hetrec2011-lastfm-2k-b
 UserManager = load(os.path.join(pathToData,'user-manager.pkr'))
 ArtistManager = load(os.path.join(pathToData, 'artist-manager.pkr'))
 TrainUserManager = load(os.path.join(pathToData, 'train-user-manager.pkr'))
+TagManager = load(os.path.join(pathToData, 'tag-manager.pkr'))
 
 #controllers
 @app.route('/')
@@ -61,7 +62,7 @@ def testUser(testUserID):
     testUserSet, testUserIDList = splitTrainSetWithoutRemoving(TrainUserManager, 0, [testUserID])
     knn = KNN(40)
     knn.training(TrainUserManager, ArtistManager)
-    favOfOne = knn.testing(testUserSet[testUserID], UserManager, ArtistManager, True)
+    favOfOne, allArtist, allTag = knn.testing(testUserSet[testUserID], UserManager, ArtistManager, True)
     realfavOfOne = UserManager[testUserID].getMostFav().keys()[0]
     ret = "The most listen artist:\n"+str(ArtistManager[realfavOfOne])+"\n"
     ret += "The artist we predict:\n"+str(ArtistManager[favOfOne])
@@ -108,10 +109,26 @@ def buildMockUser():
             missingArtist.append(artistID)
     knn = KNN(40)
     knn.training(UserManager, ArtistManager)
-    favOfOne = knn.testing(testUser, UserManager, ArtistManager, True)
+    favOfOne, allArtist, allTag = knn.testing(testUser, UserManager, ArtistManager, True)
     ret = {'artistID': favOfOne}
     if len(missingArtist) > 0:
         ret['warning'] = {'missingArtist':missingArtist}
+
+    ret['artists'] = []
+    allArtistLen = len(allArtist)
+    for i in range(allArtistLen, max(0, allArtistLen-10), -1):
+        artistID = allArtist[i][0]
+        matchWeight = allArtist[i][1]
+        artistName = ArtistManager[artistID].Name
+        ret['artists'].append({'id':artistID, 'name':artistName, 'match':matchWeight})
+
+    ret['tags'] = []
+    allTagLen = len(allTag)
+    for i in range(allTagLen, max(0, allTagLen-10), -1):
+        tagID = allTag[i][0]
+        tagWeight = allTag[i][1]
+        tagName = TagManager[tagID]
+        ret['tags'].append({'id':tagID, 'name':tagName, 'match':tagWeight})
     # dataObj = {'artists-num':len(artistlist)}
     return json.dumps(ret)
 
