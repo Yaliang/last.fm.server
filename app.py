@@ -115,16 +115,16 @@ def buildMockUser():
         ret['warning'] = {'missingArtist':missingArtist}
 
     ret['artists'] = []
-    allArtistLen = len(allArtist)
-    for i in range(allArtistLen, max(0, allArtistLen-10), -1):
+    allArtistLen = len(allArtist)-1
+    for i in range(allArtistLen, max(-1, allArtistLen-10), -1):
         artistID = allArtist[i][0]
         matchWeight = allArtist[i][1]
         artistName = ArtistManager[artistID].Name
         ret['artists'].append({'id':artistID, 'name':artistName, 'match':matchWeight})
 
     ret['tags'] = []
-    allTagLen = len(allTag)
-    for i in range(allTagLen, max(0, allTagLen-10), -1):
+    allTagLen = len(allTag)-1
+    for i in range(allTagLen, max(-1, allTagLen-10), -1):
         tagID = allTag[i][0]
         tagWeight = allTag[i][1]
         tagName = TagManager[tagID]
