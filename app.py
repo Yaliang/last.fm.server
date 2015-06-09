@@ -59,7 +59,7 @@ def testUser(testUserID):
     if not UserManager.has_key(testUserID):
         return "don't has user with userID = "+str(testUserID)
     testUserSet, testUserIDList = splitTrainSetWithoutRemoving(TrainUserManager, 0, [testUserID])
-    knn = KNN(2)
+    knn = KNN(40)
     knn.training(TrainUserManager, ArtistManager)
     favOfOne = knn.testing(testUserSet[testUserID], UserManager, ArtistManager, True)
     realfavOfOne = UserManager[testUserID].getMostFav().keys()[0]
@@ -104,7 +104,7 @@ def buildMockUser():
             testUser.insertArt(artistID, artistWeight)
         else:
             missingArtist.append(artistID)
-    knn = KNN(45)
+    knn = KNN(40)
     knn.training(UserManager, ArtistManager)
     favOfOne = knn.testing(testUser, UserManager, ArtistManager, True)
     ret = {'artistID': favOfOne}
