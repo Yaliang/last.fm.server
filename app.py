@@ -123,10 +123,10 @@ def buildMockUser():
         artistName = ArtistManager[artistID].Name
         topTag = ArtistManager[artistID].getTopTag()
         if topTag == -1:
-            topTagName = "-1"
+            topTagName = ""
         else:
             topTagName = TagManager[topTag]
-        ret['artists'].append({'id':artistID, 'name':artistName, 'match':matchWeight, 'top':topTag, 'tagName':topTagName})
+        ret['artists'].append({'id':artistID, 'name':artistName, 'match':matchWeight, 'tag':topTag, 'tagName':topTagName})
 
     ret['tags'] = []
     allTagLen = len(allTag)-1
