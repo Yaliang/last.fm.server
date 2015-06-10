@@ -116,9 +116,10 @@ def buildMockUser():
 
     ret['artists'] = []
     allArtistLen = len(allArtist)-1
+    maxArtistMatchWeight = allArtist[-1][1]
     for i in range(allArtistLen, max(-1, allArtistLen-10), -1):
         artistID = allArtist[i][0]
-        matchWeight = allArtist[i][1]
+        matchWeight = allArtist[i][1] / maxArtistMatchWeight
         artistName = ArtistManager[artistID].Name
         ret['artists'].append({'id':artistID, 'name':artistName, 'match':matchWeight})
 
