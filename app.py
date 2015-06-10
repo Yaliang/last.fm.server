@@ -121,7 +121,12 @@ def buildMockUser():
         artistID = allArtist[i][0]
         matchWeight = allArtist[i][1] / maxArtistMatchWeight
         artistName = ArtistManager[artistID].Name
-        ret['artists'].append({'id':artistID, 'name':artistName, 'match':matchWeight})
+        topTag = ArtistManager[artistID].getTopTag()
+        if topTag == -1:
+            topTagName = "-1"
+        else:
+            topTagName = TagManager[topTag]
+        ret['artists'].append({'id':artistID, 'name':artistName, 'match':matchWeight, 'top':topTag, 'tagName':topTagName})
 
     ret['tags'] = []
     allTagLen = len(allTag)-1

@@ -37,7 +37,6 @@ class Artist:
 
 	def tagNormalize(self):
 		"""to normalize the times of tags appears"""
-
 		totalTagNum = 0
 		for key, value in self.Tag.iteritems():
 			totalTagNum += value
@@ -46,6 +45,17 @@ class Artist:
 		self.TagNormalized = {}
 		for key, value in self.Tag.iteritems():
 			self.TagNormalized[key] = 1.0*value/totalTagNum
+
+	def getTopTag(self):
+		""" to get the top tag with the weight """
+		topTag = -1
+		maxWeight = 0
+		for key, value in self.Tag.iteritems():
+			if value > maxWeight:
+				maxWeight = value
+				topTag = key
+
+		return topTag
 
 
 
